@@ -1,5 +1,9 @@
 #include <stdio.h>
 
+#define TAM 10   // tamanho do tabuleiro
+#define NAVIO 3  // tamanho dos navios
+
+
 // Desafio Batalha Naval - MateCheck
 // Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
 // Siga os comentários para implementar cada parte do desafio.
@@ -35,6 +39,59 @@ int main() {
     // 0 0 1 0 0
     // 1 1 1 1 1
     // 0 0 1 0 0
+
+    int tabuleiro[TAM][TAM];
+
+    // 1) inicializa tabuleiro com 0
+    for(int i = 0; i < TAM; i++){
+        for(int j = 0; j < TAM; j++){
+            tabuleiro[i][j] = 0;
+        }
+    }
+
+    // Coordenadas do navio horizontal (linha, coluna inicial)
+    int linhaH = 2;
+    int colunaH = 4;
+
+    // Coordenadas do navio vertical (linha, coluna inicial)
+    int linhaV = 5;
+    int colunaV = 1;
+
+    // validação simples de limites
+    if (colunaH + NAVIO <= TAM && linhaV + NAVIO <= TAM){
+
+        // 2) posicionar navio horizontal
+        for(int i = 0; i < NAVIO; i++){
+            tabuleiro[linhaH][colunaH + i] = 3;
+        }
+
+        // 3) posicionar navio vertical
+        for(int i = 0; i < NAVIO; i++){
+            // verificação de sobreposição
+            if(tabuleiro[linhaV + i][colunaV] == 0){
+                tabuleiro[linhaV + i][colunaV] = 3;
+            } else{
+                printf("ERRO: Sobreposicao detectada!\n");
+                return 0;
+            }
+        }
+
+    } else{
+        printf("ERRO: Navios fora dos limites do tabuleiro!\n");
+        return 0;
+    }
+
+    // 4) exibir tabuleiro
+    printf("\nTABULEIRO:\n\n");
+    for(int i = 0; i < TAM; i++){
+        for(int j = 0; j < TAM; j++){
+            printf("%d ", tabuleiro[i][j]);
+        }
+        printf("\n");
+    }
+
+
+
 
     return 0;
 }
